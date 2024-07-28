@@ -318,5 +318,6 @@ if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
     main_window = Console_TextBrowser()
+    main_window.append_text(main_window._Console_TextBrowser__SVG_PB_INCREASE)
     main_window.show()
     sys.exit(app.exec_())
