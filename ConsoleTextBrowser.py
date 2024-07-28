@@ -16,6 +16,8 @@ class Console_TextBrowser(QWidget):
     用户可调用方法: 
         向 TextBrowser 中添加文字
             append_text(text_on_textbrowser: str)-> None
+        清空 TextBrowser 显示
+            clear(self) -> None
     '''
 
     def append_text(self, text_on_textbrowser: str) -> None:
@@ -35,6 +37,12 @@ class Console_TextBrowser(QWidget):
             self.text_browser.moveCursor(QTextCursor.End)
             self.text_browser.insertPlainText(str(e) + "\n")
             self.text_browser.moveCursor(QTextCursor.End)
+
+    def clear(self) -> None:
+        '''
+        清空 TextBrowser 显示
+        '''
+        self.text_browser.clear()
 
     def __init__(self, default_font_family='Arial', default_font_size=13, traceback_display=False) -> None:
         super().__init__()
@@ -147,7 +155,7 @@ class Console_TextBrowser(QWidget):
         layout_pb.addWidget(self.pb_reset)
         layout_pb.addWidget(self.pb_clear)
         layout = QVBoxLayout()
-        layout.setContentsMargins(5, 5, 5, 10)
+        layout.setContentsMargins(0, 0, 0, 5)
         layout.setSpacing(0)
         layout.addWidget(self.text_browser, stretch=100)
         layout.addLayout(layout_pb, stretch=0)
