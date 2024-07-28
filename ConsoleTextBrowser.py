@@ -45,7 +45,6 @@ class Console_TextBrowser(QWidget):
         self.__widget_init()
         self.__layout_init()
         self.__signal_connections()
-        self.append_text(self.__SVG_PB_RESET)
 
     def __para_init(self):
         '''
