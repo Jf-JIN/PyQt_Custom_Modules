@@ -1,6 +1,6 @@
 
 
-from PyQt5.QtWidgets import QWidget, QTextBrowser, QPushButton, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QTextBrowser, QPushButton, QVBoxLayout, QHBoxLayout, QSizePolicy, QFrame
 from PyQt5.QtGui import QIcon, QPixmap, QTextCursor, QFont
 from PyQt5.QtCore import Qt, QByteArray, QTimer
 
@@ -14,10 +14,14 @@ class Console_TextBrowser(QWidget):
     6个按钮分别为: 向上, 向下, 增加字号, 减小字号, 重置字号, 清空
 
     用户可调用方法: 
+
         向 TextBrowser 中添加文字
+        ------
             append_text(text_on_textbrowser: str)-> None
+
         清空 TextBrowser 显示
-            clear(self) -> None
+        ------
+            clear() -> None
     '''
 
     def append_text(self, text_on_textbrowser: str) -> None:
@@ -44,11 +48,12 @@ class Console_TextBrowser(QWidget):
         '''
         self.text_browser.clear()
 
-    def __init__(self, default_font_family='Arial', default_font_size=13, traceback_display=False) -> None:
+    def __init__(self, default_font_family='Arial', default_font_size=13, background_color='rgb(60, 60, 60)', traceback_display=False) -> None:
         super().__init__()
         self.__flag_traceback_display = traceback_display
         self.__DEFAULT_FONT_SIZE = default_font_size
         self.__DEFAULT_FONT_FAMILY = default_font_family
+        self.__BACKGROUND_COLOR = background_color
         self.__para_init()
         self.__widget_init()
         self.__layout_init()
@@ -73,14 +78,16 @@ class Console_TextBrowser(QWidget):
         self.__SVG_PB_RESET = '''
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="800" height="800" viewBox="0 0 200 200" version="1.1" id="svg1" inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)" sodipodi:docname="恢复-白.svg"><sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" inkscape:zoom="1.0242632" inkscape:cx="222.59904" inkscape:cy="438.85205" inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="2552" inkscape:window-y="210" inkscape:window-maximized="1" inkscape:current-layer="layer1" /><defs id="defs1" /><g inkscape:label="图层 1" inkscape:groupmode="layer" id="layer1"><path id="path4" style="fill:#878787;stroke:#0c0c0c;stroke-width:3.77952756;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;paint-order:fill markers stroke;stroke-dasharray:none;fill-opacity:1;" d="M 105.85254 14.645508 A 85.039368 85.039368 0 0 0 26.004883 71.33252 L 45.47998 64.517578 L 51.944824 82.992676 A 56.692913 56.692913 0 0 1 105.85254 42.992188 A 56.692913 56.692913 0 0 1 162.54541 99.685059 A 56.692913 56.692913 0 0 1 105.85254 156.37793 A 56.692913 56.692913 0 0 1 63.743652 137.07275 L 81.060059 125.17041 L 81.428223 123.19336 L 28.83252 113.48242 L 19.056641 166.06543 L 21.033691 166.43018 L 40.154785 153.28711 A 85.039368 85.039368 0 0 0 105.85254 184.72412 A 85.039368 85.039368 0 0 0 190.8916 99.685059 A 85.039368 85.039368 0 0 0 105.85254 14.645508 z " /></g></svg> '''
 
-        self.__SVG_PB_CLEAR = '''
-        <svg width="800" height="800" viewBox="0 0 211.66666 211.66667" version="1.1" id="svg1" inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)" sodipodi:docname="橡皮擦.svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" inkscape:zoom="0.51213161" inkscape:cx="385.64306" inkscape:cy="416.88503" inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="2552" inkscape:window-y="210" inkscape:window-maximized="1" inkscape:current-layer="layer1" /> <defs id="defs1" /> <g inkscape:label="图层 1" inkscape:groupmode="layer" id="layer1"> <path id="rect1" style="fill:#878787;fill-opacity:0.988235;stroke-width:12.7546;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;paint-order:fill markers stroke" d="m 134.72498,3.9109743 c -2.30782,-5e-6 -4.61538,0.884152 -6.38374,2.652516 L 7.8636744,127.04106 c -3.536728,3.53672 -3.536722,9.23136 0,12.76809 L 72.61467,204.56014 c 3 536722,3.53672 9.231362,3.53673 12.76809,0 L 205.86033,84.082576 c 3.53673,-3.536727 3.53672,-9.231368 0,-12.76809 l -64.751,-64.7509957 c -1.76836,-1.768365 -4.07655,-2.652521 -6.38435,-2.652516 z m -93.007583,95.6576067 71.215063,71.215069 -4.26931,4.26931 -5.38165,5.38165 -22.224736,22.22473 c -1.235268,1.23527 -3.375174,1.08409 -4.798075,-0.3388 L 10.102656,136.1645 C 8.6797644,134.74162 8.5285844,132.6017 9.7638524,131.36643 L 37.370232,103.76005 c 0.181357,-0.18136 0.386404,-0.32397 0.601626,-0.44593 z" /> </g> </svg>'''
+        self.__SVG_PB_CLEAR = ''' 
+        <svg width="780.6073" height="700.7735" viewBox="0 0 206.53567 185.41299" version="1.1" id="svg1" inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)" sodipodi:docname="橡皮擦2.svg" inkscape:export-filename="橡皮擦-2.svg" inkscape:export-xdpi="96" inkscape:export-ydpi="96" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" inkscape:zoom="0.70710678" inkscape:cx="299.10617" inkscape:cy="553.66461" inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="2552" inkscape:window-y="210" inkscape:window-maximized="1" inkscape:current-layer="layer1" /> <defs id="defs1" /> <g inkscape:label="图层 1" inkscape:groupmode="layer" id="layer1" transform="translate(-2.9624258,-13.713348)"> <path id="rect2" style="fill:#878787;fill-opacity:0.988235;stroke-width:4.75524;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;paint-order:fill markers stroke" d="m 132.31915,13.713348 c -4.48221,0 -8.96428,1.717077 -12.39878,5.151576 L 8.1141774,130.67113 c -6.8690009,6.869 -6.8690019,17.92856 -3e-6,24.79755 l 43.6576666 43.65767 h 4.859157 11.096381 27.325665 13.457386 62.56644 c 2.46434,0 4.44829,-1.98395 4.44828,-4.44828 l 1e-5,-0.93035 c 0,-2.46434 -1.98395,-4.44829 -4.44829,-4 44829 l -52.73951,-1e-5 86.009,-86.00851 c 6.869,-6.868997 6.869,-17.929041 0,-24.79804 L 144.71842,18.864924 c -3.4345,-3.434499 -7.91705,-5.151576 -12.39927,-5 151576 z m -87.629375,95.472242 70.152255,70.15226 -9.96207,9.96158 H 57.900459 l -40.349101,-40.3486 c -3.330215,-3.33022 -3.482117,-8.59087 -0.470823,-12.10636 l -0.02506,-0.025 0.495889,-0.49591 0.08355,-0.0835 3.906683,-3.9062 z" /> <rect style="fill:#878787;fill-opacity:0.988235;stroke-width:4.97176;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;paint-order:fill markers stroke" id="rect1" width="139.60921" height="12.681196" x="49.303291" y="186.28546" ry="4.5749798" /> </g> </svg>'''
 
     def __widget_init(self):
         '''
         控件初始化
         '''
+        self.frame_main = QFrame(self)
         self.text_browser = QTextBrowser()
+        self.text_browser.setObjectName('TextBrowser_Console')
         self.text_browser.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.text_browser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.text_browser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -108,13 +115,11 @@ class Console_TextBrowser(QWidget):
         self.pb_clear.setToolTip('清空')
         self.pb_clear.setIcon(self.__icon_setup(self.__SVG_PB_CLEAR))
         self.__pushbutton_hover(self.pb_clear, self.__set_pb_hover_icon(self.__SVG_PB_CLEAR))
-        self.setStyleSheet('''
-                                QWidget{
-                                    border:1px solid rgba(70, 70, 70, 200);
-                                    border-radius: 10px;
-                                    background-color:rgb(60, 60, 60);
-                                }
-                            ''')
+        self.frame_main.setStyleSheet('''
+                            border:1px solid rgba(70, 70, 70, 200);
+                            border-radius: 10px;''' +
+                                      f'background-color:{self.__BACKGROUND_COLOR};'
+                                      )
         self.text_browser.setStyleSheet('''
                                             border: None;
                                             color: rgb(255, 255, 255);
@@ -154,11 +159,15 @@ class Console_TextBrowser(QWidget):
         layout_pb.addWidget(self.pb_font_size_decrease)
         layout_pb.addWidget(self.pb_reset)
         layout_pb.addWidget(self.pb_clear)
+        layout_main_frame = QVBoxLayout(self.frame_main)
+        layout_main_frame.setContentsMargins(0, 0, 0, 5)
+        layout_main_frame.setSpacing(0)
+        layout_main_frame.addWidget(self.text_browser, stretch=100)
+        layout_main_frame.addLayout(layout_pb, stretch=0)
         layout = QVBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 5)
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-        layout.addWidget(self.text_browser, stretch=100)
-        layout.addLayout(layout_pb, stretch=0)
+        layout.addWidget(self.frame_main)
         self.setLayout(layout)
 
     def __signal_connections(self):
@@ -318,7 +327,7 @@ class Console_TextBrowser(QWidget):
         '''
         scrollbar = self.text_browser.verticalScrollBar()
         value = scrollbar.value()
-        scrollbar.setValue(value+2)
+        scrollbar.setValue(value+2)()
 
 
 if __name__ == "__main__":
